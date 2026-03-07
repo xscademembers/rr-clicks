@@ -1,6 +1,7 @@
 /**
  * Vercel serverless API – runs automatically after deploy. No separate server.
  * Uses GitHub for media and contacts (set GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO in Vercel env).
+ * After adding env vars in Vercel, you must Redeploy for them to take effect.
  */
 import express from 'express';
 import cors from 'cors';
@@ -42,7 +43,6 @@ async function githubRequest(endpoint, method = 'GET', body) {
 
 const CONTACTS_PATH = 'data/contacts.json';
 
-// GET /api/contacts – list contacts from GitHub file
 app.get('/api/contacts', async (req, res) => {
   try {
     if (!isGitHubConfigured()) return res.json([]);
@@ -57,7 +57,6 @@ app.get('/api/contacts', async (req, res) => {
   }
 });
 
-// POST /api/contacts – append contact to GitHub file
 app.post('/api/contacts', async (req, res) => {
   try {
     if (!isGitHubConfigured()) {
@@ -112,7 +111,6 @@ app.post('/api/contacts', async (req, res) => {
   }
 });
 
-// GET /api/media/:category
 app.get('/api/media/:category', async (req, res) => {
   try {
     if (!isGitHubConfigured()) return res.json([]);
@@ -139,7 +137,6 @@ app.get('/api/media/:category', async (req, res) => {
   }
 });
 
-// POST /api/media/:category
 app.post('/api/media/:category', upload.single('file'), async (req, res) => {
   try {
     if (!isGitHubConfigured()) {
@@ -172,7 +169,6 @@ app.post('/api/media/:category', upload.single('file'), async (req, res) => {
   }
 });
 
-// DELETE /api/media
 app.delete('/api/media', async (req, res) => {
   try {
     if (!isGitHubConfigured()) {
@@ -190,10 +186,4 @@ app.delete('/api/media', async (req, res) => {
   }
 });
 
-// Vercel serverless: forward (req, res) to Express so path is preserved
-export default function handler(req, res) {
-  return new Promise((resolve) => {
-    res.on('finish', resolve);
-    app(req, res);
-  });
-}
+export default app;
