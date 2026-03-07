@@ -37,7 +37,13 @@ export default function Home() {
           try {
             const res = await fetch(`/api/media/${category}`);
             if (!res.ok) return { category, url: null };
-            const data = await res.json();
+            const text = await res.text();
+            let data: { name?: string; url?: string; download_url?: string }[];
+            try {
+              data = JSON.parse(text);
+            } catch {
+              return { category, url: null };
+            }
             const firstImage = Array.isArray(data)
               ? data.find((f: { name: string }) => isImageFile(f.name))
               : null;

@@ -68,8 +68,14 @@ export default function Dashboard() {
     try {
       const response = await fetch('/api/contacts');
       if (!response.ok) throw new Error('Failed to fetch contacts');
-      const data = await response.json();
-      setContacts(data);
+      const text = await response.text();
+      let data: ContactSubmission[];
+      try {
+        data = JSON.parse(text);
+      } catch {
+        throw new Error('Server returned invalid response. Run the app with npm run dev (or check deploy) so the API is available.');
+      }
+      setContacts(Array.isArray(data) ? data : []);
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -94,8 +100,15 @@ export default function Dashboard() {
       });
       
       if (!response.ok) {
-        const errData = await response.json();
-        throw new Error(errData.error || 'Upload failed');
+        const text = await response.text();
+        let errMsg = 'Upload failed';
+        try {
+          const errData = JSON.parse(text);
+          if (errData?.error) errMsg = errData.error;
+        } catch {
+          errMsg = 'Server not available. Run with npm run dev or check your deploy and API env.';
+        }
+        throw new Error(errMsg);
       }
       
       await fetchMedia(); // Refresh list
