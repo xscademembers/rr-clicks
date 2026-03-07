@@ -13,7 +13,6 @@ export default function Header() {
     { name: 'Normal', path: '/normal' },
     { name: 'LED Screens', path: '/led' },
     { name: 'Contact', path: '/contact' },
-    { name: 'Dashboard', path: '/dashboard' },
   ];
 
   const isActive = (path: string) => location.pathname === path;

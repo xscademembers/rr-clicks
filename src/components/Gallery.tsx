@@ -89,18 +89,18 @@ export default function Gallery({ category, title, description }: GalleryProps) 
           {media.map((item) => {
             const isVideo = /\.(mp4|webm)$/i.test(item.name);
             return (
-              <div key={item.sha} className="group relative aspect-square overflow-hidden bg-gray-100">
+              <div key={item.sha} className="group relative overflow-hidden bg-gray-100 rounded-lg">
                 {isVideo ? (
                   <video 
                     src={item.url} 
                     controls 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 motion-safe:duration-300"
+                    className="w-full h-auto max-h-[400px] object-contain group-hover:scale-[1.02] transition-transform duration-300 motion-safe:duration-150"
                   />
                 ) : (
                   <img 
                     src={item.url} 
                     alt={item.name} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 motion-safe:duration-300"
+                    className="w-full h-auto object-contain group-hover:scale-[1.02] transition-transform duration-300 motion-safe:duration-150"
                     referrerPolicy="no-referrer"
                     loading="lazy"
                   />

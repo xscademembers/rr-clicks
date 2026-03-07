@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Upload, Trash2, Image as ImageIcon, Video, FileText, Loader2, AlertCircle } from 'lucide-react';
+import { Upload, Trash2, Image as ImageIcon, Video, FileText, Loader2, AlertCircle, Lock } from 'lucide-react';
 import { getApiUnavailableMessage } from '../utils/apiError';
+
+const DASHBOARD_STORAGE_KEY = 'rr_dashboard';
+const DASHBOARD_PASSWORD = 'admin123';
 
 interface ContactSubmission {
   id: number;
@@ -18,7 +21,16 @@ interface MediaItem {
   path: string;
 }
 
+function getDashboardUnlocked(): boolean {
+  if (typeof window === 'undefined') return false;
+  return sessionStorage.getItem(DASHBOARD_STORAGE_KEY) === '1';
+}
+
 export default function Dashboard() {
+  const [unlocked, setUnlocked] = useState(false);
+  const [passwordInput, setPasswordInput] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
+
   const [activeTab, setActiveTab] = useState<'media' | 'contacts'>('media');
   const [category, setCategory] = useState('events');
   const [media, setMedia] = useState<MediaItem[]>([]);
@@ -27,6 +39,22 @@ export default function Dashboard() {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [mediaHint, setMediaHint] = useState<string | null>(null);
+
+  useEffect(() => {
+    setUnlocked(getDashboardUnlocked());
+  }, []);
+
+  const handlePasswordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setPasswordError(false);
+    if (passwordInput === DASHBOARD_PASSWORD) {
+      sessionStorage.setItem(DASHBOARD_STORAGE_KEY, '1');
+      setUnlocked(true);
+      setPasswordInput('');
+    } else {
+      setPasswordError(true);
+    }
+  };
 
   const categories = [
     { id: 'events', name: 'Events' },
@@ -139,6 +167,42 @@ export default function Dashboard() {
       setError(err.message);
     }
   };
+
+  if (!unlocked) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center px-4">
+        <div className="w-full max-w-sm bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
+          <div className="flex justify-center mb-6">
+            <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center">
+              <Lock className="w-7 h-7 text-secondary" />
+            </div>
+          </div>
+          <h2 className="font-serif text-2xl font-bold text-secondary text-center mb-2">Dashboard</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Enter password to continue.</p>
+          <form onSubmit={handlePasswordSubmit} className="space-y-4">
+            <input
+              type="password"
+              value={passwordInput}
+              onChange={(e) => { setPasswordInput(e.target.value); setPasswordError(false); }}
+              placeholder="Password"
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg text-secondary focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+              autoFocus
+              autoComplete="current-password"
+            />
+            {passwordError && (
+              <p className="text-red-500 text-sm">Incorrect password.</p>
+            )}
+            <button
+              type="submit"
+              className="w-full bg-secondary text-white font-bold py-3 rounded-lg hover:bg-secondary/90 transition-colors"
+            >
+              Enter
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-[1600px] mx-auto w-full">
@@ -255,20 +319,21 @@ export default function Dashboard() {
               {media.map((item) => {
                 const isVideo = /\.(mp4|webm)$/i.test(item.name);
                 return (
-                  <div key={item.sha} className="group relative aspect-square rounded-xl overflow-hidden border border-gray-200 bg-gray-100">
+                  <div key={item.sha} className="group relative rounded-xl overflow-hidden border border-gray-200 bg-gray-100">
                     {isVideo ? (
-                      <div className="w-full h-full flex items-center justify-center bg-gray-200">
-                        <Video className="w-12 h-12 text-gray-400" />
-                      </div>
+                      <video 
+                        src={item.url} 
+                        controls 
+                        className="w-full h-auto max-h-48 object-contain"
+                      />
                     ) : (
                       <img 
                         src={item.url} 
                         alt={item.name} 
-                        className="w-full h-full object-cover"
+                        className="w-full h-auto object-contain"
                         referrerPolicy="no-referrer"
                       />
                     )}
-                    
                     {/* Overlay */}
                     <div className="absolute inset-0 bg-secondary/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-4">
                       <p className="text-xs text-white truncate w-full text-center mb-4">{item.name}</p>
