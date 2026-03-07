@@ -27,6 +27,20 @@ Images in **`public/images/home/`** are committed to the repo and will render on
 
 Add these files under `public/images/home/`. If a file is missing, the site falls back to placeholder images. Do **not** add `public/images` to `.gitignore` so that images are pushed and served from the repo.
 
+## Deploy to Vercel (recommended – no server to run)
+
+After you push to Git and deploy on Vercel, the **site and API run together**; you don’t run a server yourself.
+
+1. Push your code to GitHub.
+2. In [Vercel](https://vercel.com), import the repo and deploy (Vercel will use `vercel.json`: build = `npm run build`, output = `dist`).
+3. In the project **Settings → Environment Variables**, add:
+   - `GITHUB_TOKEN` – your GitHub Personal Access Token
+   - `GITHUB_OWNER` – e.g. `xscademembers`
+   - `GITHUB_REPO` – e.g. `rr-clicks`
+4. Redeploy if you added env vars after the first deploy.
+
+The `api/` folder runs as serverless functions on Vercel (contacts + media). Contact form and Dashboard uploads use your GitHub repo; contacts are stored in `data/contacts.json` in the repo.
+
 ## Deploy to GitHub Pages
 
 1. Build: `npm run build`

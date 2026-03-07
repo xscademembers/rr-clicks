@@ -47,8 +47,14 @@ export default function Dashboard() {
     try {
       const response = await fetch(`/api/media/${category}`);
       if (!response.ok) throw new Error('Failed to fetch media');
-      const data = await response.json();
-      setMedia(data);
+      const text = await response.text();
+      let data: MediaItem[];
+      try {
+        data = JSON.parse(text);
+      } catch {
+        throw new Error('Server returned invalid response. Run the app with npm run dev so the API is available.');
+      }
+      setMedia(Array.isArray(data) ? data : []);
     } catch (err: any) {
       setError(err.message);
     } finally {

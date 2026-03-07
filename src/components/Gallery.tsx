@@ -26,8 +26,18 @@ export default function Gallery({ category, title, description }: GalleryProps) 
         if (!response.ok) {
           throw new Error('Failed to fetch media');
         }
-        const data = await response.json();
-        const filtered = data.filter((item: MediaItem) => 
+        const text = await response.text();
+        let data: MediaItem[];
+        try {
+          data = JSON.parse(text);
+        } catch {
+          setError('Server not available. Run the app with npm run dev.');
+          setMedia([]);
+          setLoading(false);
+          return;
+        }
+        const list = Array.isArray(data) ? data : [];
+        const filtered = list.filter((item: MediaItem) =>
           /\.(jpg|jpeg|png|gif|mp4|webm)$/i.test(item.name)
         );
         setMedia(filtered);
