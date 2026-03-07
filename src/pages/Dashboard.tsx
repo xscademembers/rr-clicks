@@ -26,6 +26,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [mediaHint, setMediaHint] = useState<string | null>(null);
 
   const categories = [
     { id: 'events', name: 'Events' },
@@ -44,7 +45,7 @@ export default function Dashboard() {
 
   const fetchMedia = async () => {
     setLoading(true);
-    setError(null);
+    setMediaHint(null);
     try {
       const response = await fetch(`/api/media/${category}`);
       if (!response.ok) throw new Error('Failed to fetch media');
@@ -56,8 +57,9 @@ export default function Dashboard() {
         throw new Error(getApiUnavailableMessage());
       }
       setMedia(Array.isArray(data) ? data : []);
-    } catch (err: any) {
-      setError(err.message);
+    } catch {
+      setMedia([]);
+      setMediaHint(getApiUnavailableMessage());
     } finally {
       setLoading(false);
     }
@@ -183,6 +185,13 @@ export default function Dashboard() {
               </p>
             )}
           </div>
+        </div>
+      )}
+
+      {mediaHint && activeTab === 'media' && !error && (
+        <div className="mb-8 p-4 bg-blue-50 border border-blue-200 rounded-xl text-blue-800 text-sm">
+          <p className="font-medium">Media not connected</p>
+          <p className="mt-1">{mediaHint}</p>
         </div>
       )}
 
