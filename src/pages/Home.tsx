@@ -72,42 +72,61 @@ export default function Home() {
   return (
     <div className="flex flex-col bg-white">
       {/* Hero / Services Section */}
-      <section className="relative w-full max-w-[1600px] mx-auto pt-10 pb-32 px-4 sm:px-6 lg:px-8 overflow-hidden min-h-[80vh] flex flex-col justify-center">
-        
-        {/* Massive background text */}
+      <section className="relative w-full max-w-[1600px] mx-auto pt-16 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden" aria-labelledby="services-heading">
+        {/* Decorative background text */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full flex justify-center pointer-events-none z-0">
-          <h1 className="text-[18vw] font-black text-gray-100 leading-none tracking-tighter select-none lowercase">
+          <span className="text-[16vw] font-black text-gray-100 leading-none tracking-tighter select-none lowercase" aria-hidden>
             services
-          </h1>
+          </span>
         </div>
 
-        {/* Grid of 4 square images */}
-        <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-          {services.map((service, index) => (
-            <Link 
-              key={index} 
-              to={service.link}
-              className="group block aspect-square relative overflow-hidden bg-gray-100"
-            >
-              {featuredByCategory[service.slug] ? (
-                <HomeImage
-                  src={featuredByCategory[service.slug]}
-                  fallback={FALLBACK_IMAGES[service.slug] ?? FALLBACK_IMAGES.wedding}
-                  alt={service.title}
-                />
-              ) : (
-                <HomeImage
-                  src={`/images/home/${service.slug}.jpg`}
-                  fallback={FALLBACK_IMAGES[service.slug] ?? FALLBACK_IMAGES.wedding}
-                  alt={service.title}
-                />
-              )}
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
-              <h3 className="absolute top-6 left-6 text-white font-serif text-3xl font-bold tracking-wide">
-                {service.title}
-              </h3>
-            </Link>
-          ))}
+        <div className="relative z-10">
+          {/* Section header: title + paragraph */}
+          <header className="text-center max-w-2xl mx-auto mb-16">
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[var(--color-primary)] mb-4">
+              What we offer
+            </p>
+            <h2 id="services-heading" className="font-serif text-4xl sm:text-5xl font-bold text-[var(--color-secondary)] tracking-tight mb-6">
+              Our Services
+            </h2>
+            <p className="text-lg text-gray-600 font-light leading-relaxed">
+              From intimate weddings to large-scale events, we capture every moment with care. Explore our photography and LED screen services below—each crafted to bring your vision to life.
+            </p>
+          </header>
+
+          {/* Grid of 4 service cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {services.map((service, index) => (
+              <Link
+                key={index}
+                to={service.link}
+                className="group block aspect-square relative overflow-hidden bg-gray-100 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2"
+              >
+                {featuredByCategory[service.slug] ? (
+                  <HomeImage
+                    src={featuredByCategory[service.slug]}
+                    fallback={FALLBACK_IMAGES[service.slug] ?? FALLBACK_IMAGES.wedding}
+                    alt={service.title}
+                  />
+                ) : (
+                  <HomeImage
+                    src={`/images/home/${service.slug}.jpg`}
+                    fallback={FALLBACK_IMAGES[service.slug] ?? FALLBACK_IMAGES.wedding}
+                    alt={service.title}
+                  />
+                )}
+                <div className="absolute inset-0 bg-black/25 group-hover:bg-black/40 transition-colors duration-300 motion-safe:duration-150" />
+                <div className="absolute inset-0 flex flex-col justify-end p-6">
+                  <h3 className="text-white font-serif text-2xl sm:text-3xl font-bold tracking-wide drop-shadow-md">
+                    {service.title}
+                  </h3>
+                  <span className="text-white/90 text-sm font-medium mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 motion-safe:duration-150">
+                    View gallery →
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
