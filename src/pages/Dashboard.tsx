@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Upload, Trash2, Image as ImageIcon, Video, FileText, Loader2, AlertCircle } from 'lucide-react';
+import { getApiUnavailableMessage } from '../utils/apiError';
 
 interface ContactSubmission {
   id: number;
@@ -52,7 +53,7 @@ export default function Dashboard() {
       try {
         data = JSON.parse(text);
       } catch {
-        throw new Error('Server returned invalid response. Run the app with npm run dev so the API is available.');
+        throw new Error(getApiUnavailableMessage());
       }
       setMedia(Array.isArray(data) ? data : []);
     } catch (err: any) {
@@ -73,7 +74,7 @@ export default function Dashboard() {
       try {
         data = JSON.parse(text);
       } catch {
-        throw new Error('Server returned invalid response. Run the app with npm run dev (or check deploy) so the API is available.');
+        throw new Error(getApiUnavailableMessage());
       }
       setContacts(Array.isArray(data) ? data : []);
     } catch (err: any) {
@@ -106,7 +107,7 @@ export default function Dashboard() {
           const errData = JSON.parse(text);
           if (errData?.error) errMsg = errData.error;
         } catch {
-          errMsg = 'Server not available. Run with npm run dev or check your deploy and API env.';
+          errMsg = getApiUnavailableMessage();
         }
         throw new Error(errMsg);
       }

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Loader2 } from 'lucide-react';
+import { getApiUnavailableMessage } from '../utils/apiError';
 
 interface MediaItem {
   name: string;
@@ -31,7 +32,7 @@ export default function Gallery({ category, title, description }: GalleryProps) 
         try {
           data = JSON.parse(text);
         } catch {
-          setError('Server not available. Run the app with npm run dev.');
+          setError(getApiUnavailableMessage());
           setMedia([]);
           setLoading(false);
           return;
