@@ -26,7 +26,6 @@ const CATEGORIES = ['wedding', 'normal', 'events', 'led'];
 const isImageFile = (name: string) => /\.(jpg|jpeg|png|gif|webp)$/i.test(name);
 
 export default function Home() {
-  const [aboutImgFallback, setAboutImgFallback] = useState(false);
   const [featuredByCategory, setFeaturedByCategory] = useState<Record<string, string>>({});
 
   // Load first image from each category (Dashboard uploads) so Home shows client's images
@@ -116,13 +115,11 @@ export default function Home() {
       <section className="py-24 bg-gray-50">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="relative aspect-[4/3] overflow-hidden bg-gray-200">
-              <img 
-                src={aboutImgFallback ? ABOUT_FALLBACK : '/images/home/about.jpg'}
+            <div className="relative aspect-[4/3] overflow-hidden bg-gray-200 rounded-lg grayscale hover:grayscale-0 transition-all duration-700 motion-safe:duration-300">
+              <HomeImage
+                src="/images/home/about.jpg"
+                fallback={ABOUT_FALLBACK}
                 alt="Photographer"
-                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 motion-safe:duration-300"
-                referrerPolicy="no-referrer"
-                onError={() => setAboutImgFallback(true)}
               />
             </div>
             
