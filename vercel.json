@@ -1,6 +1,7 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "ignoreCommand": "bash -c 'FILES=$(git diff --name-only ${VERCEL_GIT_PREVIOUS_SHA:-HEAD^} ${VERCEL_GIT_COMMIT_SHA:-HEAD} 2>/dev/null); [ -z \"$FILES\" ] && exit 1; echo \"$FILES\" | grep -qvE \"^(events|wedding|normal|led|data)/\" && exit 1; exit 0'",
   "rewrites": [
     { "source": "/api/:path*", "destination": "/api" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
