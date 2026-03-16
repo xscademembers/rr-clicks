@@ -10,6 +10,7 @@ import Events from './pages/Events';
 import Wedding from './pages/Wedding';
 import NormalPhotography from './pages/NormalPhotography';
 import LedScreens from './pages/LedScreens';
+import LedWalls from './pages/LedWalls';
 import Contact from './pages/Contact';
 import Dashboard from './pages/Dashboard';
 
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="wedding" element={<Wedding />} />
           <Route path="normal" element={<NormalPhotography />} />
           <Route path="led" element={<LedScreens />} />
+          <Route path="led-walls" element={<LedWalls />} />
           <Route path="contact" element={<Contact />} />
           <Route path="dashboard" element={<Dashboard />} />
         </Route>

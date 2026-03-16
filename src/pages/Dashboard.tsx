@@ -142,7 +142,7 @@ export default function Dashboard() {
         throw new Error(errMsg);
       }
       
-      await fetchMedia(); // Refresh list
+      await fetchMedia();
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -162,7 +162,7 @@ export default function Dashboard() {
       
       if (!response.ok) throw new Error('Delete failed');
       
-      await fetchMedia(); // Refresh list
+      await fetchMedia();
     } catch (err: any) {
       setError(err.message);
     }
@@ -171,30 +171,30 @@ export default function Dashboard() {
   if (!unlocked) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center px-4">
-        <div className="w-full max-w-sm bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
+        <div className="w-full max-w-sm bg-[var(--color-surface)] border border-[var(--color-border)] rounded-sm p-8">
           <div className="flex justify-center mb-6">
-            <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center">
-              <Lock className="w-7 h-7 text-secondary" />
+            <div className="w-14 h-14 rounded-full bg-[var(--color-surface-light)] flex items-center justify-center">
+              <Lock className="w-7 h-7 text-[var(--color-primary)]" />
             </div>
           </div>
-          <h2 className="font-serif text-2xl font-bold text-secondary text-center mb-2">Dashboard</h2>
-          <p className="text-gray-500 text-sm text-center mb-6">Enter password to continue.</p>
+          <h2 className="font-serif text-2xl font-bold text-[var(--color-primary)] text-center mb-2">Dashboard</h2>
+          <p className="text-[var(--color-muted)] text-sm text-center mb-6">Enter password to continue.</p>
           <form onSubmit={handlePasswordSubmit} className="space-y-4">
             <input
               type="password"
               value={passwordInput}
               onChange={(e) => { setPasswordInput(e.target.value); setPasswordError(false); }}
               placeholder="Password"
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg text-secondary focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+              className="w-full px-4 py-3 bg-[var(--color-surface-light)] border border-[var(--color-border)] rounded-sm text-[var(--color-secondary)] placeholder-[var(--color-muted)]/50 focus:outline-none focus:border-[var(--color-primary)] focus:ring-1 focus:ring-[var(--color-primary)]"
               autoFocus
               autoComplete="current-password"
             />
             {passwordError && (
-              <p className="text-red-500 text-sm">Incorrect password.</p>
+              <p className="text-[var(--color-accent-light)] text-sm">Incorrect password.</p>
             )}
             <button
               type="submit"
-              className="w-full bg-secondary text-white font-bold py-3 rounded-lg hover:bg-secondary/90 transition-colors"
+              className="w-full border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-[var(--color-bg)] font-semibold py-3 rounded-sm transition-all duration-300"
             >
               Enter
             </button>
@@ -207,30 +207,29 @@ export default function Dashboard() {
   return (
     <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-[1600px] mx-auto w-full">
       <div className="mb-12">
-        <h1 className="font-serif text-4xl font-bold text-secondary mb-2 uppercase tracking-wide">
+        <h1 className="font-serif text-4xl font-bold text-[var(--color-primary)] mb-2 tracking-wide">
           Dashboard
         </h1>
-        <p className="text-gray-500">Manage your portfolio and view leads.</p>
+        <p className="text-[var(--color-muted)]">Manage your portfolio and view leads.</p>
       </div>
 
-      {/* Tabs */}
-      <div className="flex space-x-4 mb-8 border-b border-gray-200 pb-4">
+      <div className="flex space-x-4 mb-8 border-b border-[var(--color-border)] pb-4">
         <button
           onClick={() => setActiveTab('media')}
-          className={`flex items-center gap-2 px-6 py-3 rounded-lg font-bold uppercase tracking-wider transition-colors ${
+          className={`flex items-center gap-2 px-6 py-3 rounded-sm font-semibold uppercase tracking-wider transition-all duration-300 ${
             activeTab === 'media' 
-              ? 'bg-secondary text-white' 
-              : 'bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-secondary'
+              ? 'bg-[var(--color-primary)] text-[var(--color-bg)]' 
+              : 'bg-[var(--color-surface)] text-[var(--color-muted)] border border-[var(--color-border)] hover:text-[var(--color-primary)] hover:border-[var(--color-primary)]/30'
           }`}
         >
           <ImageIcon className="w-5 h-5" /> Media Manager
         </button>
         <button
           onClick={() => setActiveTab('contacts')}
-          className={`flex items-center gap-2 px-6 py-3 rounded-lg font-bold uppercase tracking-wider transition-colors ${
+          className={`flex items-center gap-2 px-6 py-3 rounded-sm font-semibold uppercase tracking-wider transition-all duration-300 ${
             activeTab === 'contacts' 
-              ? 'bg-secondary text-white' 
-              : 'bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-secondary'
+              ? 'bg-[var(--color-primary)] text-[var(--color-bg)]' 
+              : 'bg-[var(--color-surface)] text-[var(--color-muted)] border border-[var(--color-border)] hover:text-[var(--color-primary)] hover:border-[var(--color-primary)]/30'
           }`}
         >
           <FileText className="w-5 h-5" /> Leads
@@ -238,13 +237,13 @@ export default function Dashboard() {
       </div>
 
       {error && (
-        <div className="mb-8 p-4 bg-red-50 border border-red-200 rounded-xl flex items-start gap-3 text-red-600">
+        <div className="mb-8 p-4 bg-[var(--color-accent)]/10 border border-[var(--color-accent)]/30 rounded-sm flex items-start gap-3 text-[var(--color-accent-light)]">
           <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
           <div>
             <p className="font-bold">Error</p>
             <p className="text-sm">{error}</p>
             {(error.includes('credentials') || error.includes('GitHub configuration')) && (
-              <p className="text-xs mt-2 text-red-500 font-medium">
+              <p className="text-xs mt-2 text-[var(--color-muted)] font-medium">
                 Add GITHUB_TOKEN, GITHUB_OWNER, and GITHUB_REPO to your environment (e.g. in Vercel project settings) to enable uploads.
               </p>
             )}
@@ -253,25 +252,24 @@ export default function Dashboard() {
       )}
 
       {mediaHint && activeTab === 'media' && !error && (
-        <div className="mb-8 p-4 bg-blue-50 border border-blue-200 rounded-xl text-blue-800 text-sm">
-          <p className="font-medium">Media not connected</p>
-          <p className="mt-1">{mediaHint}</p>
+        <div className="mb-8 p-4 bg-[var(--color-primary)]/5 border border-[var(--color-primary)]/20 rounded-sm text-[var(--color-secondary)] text-sm">
+          <p className="font-medium text-[var(--color-primary)]">Media not connected</p>
+          <p className="mt-1 text-[var(--color-muted)]">{mediaHint}</p>
         </div>
       )}
 
       {activeTab === 'media' && (
         <div className="space-y-8">
-          {/* Category Selector & Upload */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[var(--color-surface)] p-6 rounded-sm border border-[var(--color-border)]">
             <div className="flex flex-wrap gap-2">
               {categories.map((cat) => (
                 <button
                   key={cat.id}
                   onClick={() => setCategory(cat.id)}
-                  className={`px-4 py-2 rounded-lg text-sm font-bold transition-colors ${
+                  className={`px-4 py-2 rounded-sm text-sm font-semibold transition-all duration-300 ${
                     category === cat.id
-                      ? 'bg-primary text-secondary border border-primary'
-                      : 'bg-gray-50 text-gray-600 border border-gray-200 hover:border-gray-300'
+                      ? 'bg-[var(--color-primary)] text-[var(--color-bg)] border border-[var(--color-primary)]'
+                      : 'bg-[var(--color-surface-light)] text-[var(--color-muted)] border border-[var(--color-border)] hover:border-[var(--color-primary)]/30 hover:text-[var(--color-primary)]'
                   }`}
                 >
                   {cat.name}
@@ -290,10 +288,10 @@ export default function Dashboard() {
               />
               <label
                 htmlFor="file-upload"
-                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-black uppercase tracking-wider cursor-pointer transition-colors ${
+                className={`flex items-center gap-2 px-6 py-3 rounded-sm font-semibold uppercase tracking-wider cursor-pointer transition-all duration-300 ${
                   uploading
-                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                    : 'bg-secondary text-white hover:bg-secondary/90'
+                    ? 'bg-[var(--color-surface-light)] text-[var(--color-muted)] cursor-not-allowed'
+                    : 'border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-[var(--color-bg)]'
                 }`}
               >
                 {uploading ? (
@@ -305,13 +303,12 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Media Grid */}
           {loading ? (
             <div className="flex justify-center py-12">
-              <Loader2 className="w-8 h-8 text-primary animate-spin" />
+              <Loader2 className="w-8 h-8 text-[var(--color-primary)] animate-spin" />
             </div>
           ) : media.length === 0 ? (
-            <div className="text-center py-12 text-gray-500 bg-gray-50 rounded-2xl border border-gray-200">
+            <div className="text-center py-12 text-[var(--color-muted)] bg-[var(--color-surface)] rounded-sm border border-[var(--color-border)]">
               No media found in this category.
             </div>
           ) : (
@@ -319,7 +316,7 @@ export default function Dashboard() {
               {media.map((item) => {
                 const isVideo = /\.(mp4|webm)$/i.test(item.name);
                 return (
-                  <div key={item.sha} className="group relative rounded-xl overflow-hidden border border-gray-200 bg-gray-100">
+                  <div key={item.sha} className="group relative rounded-sm overflow-hidden border border-[var(--color-border)] bg-[var(--color-surface)]">
                     {isVideo ? (
                       <video 
                         src={item.url} 
@@ -334,12 +331,11 @@ export default function Dashboard() {
                         referrerPolicy="no-referrer"
                       />
                     )}
-                    {/* Overlay */}
-                    <div className="absolute inset-0 bg-secondary/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-4">
-                      <p className="text-xs text-white truncate w-full text-center mb-4">{item.name}</p>
+                    <div className="absolute inset-0 bg-[var(--color-bg)]/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-4">
+                      <p className="text-xs text-[var(--color-secondary)] truncate w-full text-center mb-4">{item.name}</p>
                       <button
                         onClick={() => handleDelete(item.path, item.sha)}
-                        className="p-2 bg-red-500 text-white hover:bg-red-600 rounded-full transition-colors shadow-lg"
+                        className="p-2 bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-light)] rounded-full transition-colors"
                         title="Delete file"
                       >
                         <Trash2 className="w-5 h-5" />
@@ -354,19 +350,19 @@ export default function Dashboard() {
       )}
 
       {activeTab === 'contacts' && (
-        <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+        <div className="bg-[var(--color-surface)] rounded-sm border border-[var(--color-border)] overflow-hidden">
           {loading ? (
             <div className="flex justify-center py-12">
-              <Loader2 className="w-8 h-8 text-primary animate-spin" />
+              <Loader2 className="w-8 h-8 text-[var(--color-primary)] animate-spin" />
             </div>
           ) : contacts.length === 0 ? (
-            <div className="text-center py-12 text-gray-500">
+            <div className="text-center py-12 text-[var(--color-muted)]">
               No contact submissions yet.
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm text-gray-600">
-                <thead className="text-xs text-secondary uppercase bg-gray-50 border-b border-gray-200 font-bold">
+              <table className="w-full text-left text-sm text-[var(--color-muted)]">
+                <thead className="text-xs text-[var(--color-primary)] uppercase bg-[var(--color-surface-light)] border-b border-[var(--color-border)] font-semibold">
                   <tr>
                     <th className="px-6 py-4">Date</th>
                     <th className="px-6 py-4">Name</th>
@@ -376,16 +372,16 @@ export default function Dashboard() {
                 </thead>
                 <tbody>
                   {contacts.map((contact) => (
-                    <tr key={contact.id} className="border-b border-gray-100 hover:bg-gray-50">
+                    <tr key={contact.id} className="border-b border-[var(--color-border)] hover:bg-[var(--color-surface-light)]">
                       <td className="px-6 py-4 whitespace-nowrap">
                         {new Date(contact.created_at).toLocaleDateString()}
                       </td>
-                      <td className="px-6 py-4 font-bold text-secondary">
+                      <td className="px-6 py-4 font-semibold text-[var(--color-secondary)]">
                         {contact.name}
                       </td>
                       <td className="px-6 py-4">
-                        <div className="font-medium">{contact.email}</div>
-                        <div className="text-gray-400">{contact.phone}</div>
+                        <div className="font-medium text-[var(--color-secondary)]">{contact.email}</div>
+                        <div className="text-[var(--color-muted)]/60">{contact.phone}</div>
                       </td>
                       <td className="px-6 py-4 max-w-md truncate" title={contact.message}>
                         {contact.message}

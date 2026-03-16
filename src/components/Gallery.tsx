@@ -55,16 +55,15 @@ export default function Gallery({ category, title, description }: GalleryProps) 
   return (
     <div className="py-24 px-4 sm:px-6 lg:px-8 max-w-[1600px] mx-auto w-full">
       <div className="text-center mb-16 relative">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full flex justify-center pointer-events-none z-0">
-          <h1 className="text-[12vw] font-black text-gray-50 leading-none tracking-tighter select-none lowercase whitespace-nowrap">
-            {category}
-          </h1>
-        </div>
         <div className="relative z-10">
-          <h2 className="font-serif text-5xl md:text-6xl font-bold text-secondary mb-6 tracking-tight">
+          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[var(--color-primary)] mb-4">
+            Gallery
+          </p>
+          <h2 className="font-serif text-5xl md:text-6xl font-bold text-[var(--color-secondary)] mb-4 tracking-tight">
             {title}
           </h2>
-          <p className="text-xl text-gray-500 max-w-2xl mx-auto font-light tracking-wide">
+          <div className="w-12 h-0.5 bg-[var(--color-primary)] mx-auto mb-6" />
+          <p className="text-lg text-[var(--color-muted)] max-w-2xl mx-auto font-light tracking-wide">
             {description}
           </p>
         </div>
@@ -72,24 +71,24 @@ export default function Gallery({ category, title, description }: GalleryProps) 
 
       {loading ? (
         <div className="flex justify-center items-center h-64">
-          <Loader2 className="w-12 h-12 text-primary animate-spin" />
+          <Loader2 className="w-12 h-12 text-[var(--color-primary)] animate-spin" />
         </div>
       ) : error ? (
-        <div className="text-center text-red-500 p-8 border border-red-100 rounded-2xl bg-red-50">
+        <div className="text-center text-[var(--color-accent-light)] p-8 border border-[var(--color-accent)]/30 rounded-sm bg-[var(--color-accent)]/10">
           <p className="font-medium">Failed to load gallery: {error}</p>
-          <p className="text-sm mt-2 text-red-400">Please ensure GitHub credentials are configured in the environment.</p>
+          <p className="text-sm mt-2 text-[var(--color-muted)]">Please ensure GitHub credentials are configured in the environment.</p>
         </div>
       ) : media.length === 0 ? (
-        <div className="text-center text-gray-500 p-16 border border-gray-200 rounded-2xl bg-gray-50">
-          <p className="text-xl font-serif italic">No media found for {title}.</p>
+        <div className="text-center text-[var(--color-muted)] p-16 border border-[var(--color-border)] rounded-sm bg-[var(--color-surface)]">
+          <p className="text-xl font-serif italic text-[var(--color-secondary)]">No media found for {title}.</p>
           <p className="mt-2 text-sm">Upload some images from the dashboard to see them here.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {media.map((item) => {
             const isVideo = /\.(mp4|webm)$/i.test(item.name);
             return (
-              <div key={item.sha} className="group relative overflow-hidden bg-gray-100 rounded-lg">
+              <div key={item.sha} className="group relative overflow-hidden bg-[var(--color-surface)] rounded-sm">
                 {isVideo ? (
                   <video 
                     src={item.url} 
@@ -105,6 +104,7 @@ export default function Gallery({ category, title, description }: GalleryProps) 
                     loading="lazy"
                   />
                 )}
+                <div className="absolute inset-0 border border-[var(--color-primary)]/0 group-hover:border-[var(--color-primary)]/20 transition-all duration-300 pointer-events-none" />
               </div>
             );
           })}

@@ -7,7 +7,7 @@ function HomeImage({ src, fallback, alt }: { src: string; fallback: string; alt:
     <img
       src={useFallback ? fallback : src}
       alt={alt}
-      className="w-full h-full object-cover transition-transform duration-700 motion-safe:duration-300 group-hover:scale-105"
+      className="w-full h-full object-cover transition-transform duration-700 motion-safe:duration-300 group-hover:scale-110"
       referrerPolicy="no-referrer"
       onError={() => setUseFallback(true)}
     />
@@ -28,7 +28,6 @@ const isImageFile = (name: string) => /\.(jpg|jpeg|png|gif|webp)$/i.test(name);
 export default function Home() {
   const [featuredByCategory, setFeaturedByCategory] = useState<Record<string, string>>({});
 
-  // Load first image from each category (Dashboard uploads) so Home shows client's images
   useEffect(() => {
     const loadFeatured = async () => {
       const results = await Promise.all(
@@ -63,44 +62,67 @@ export default function Home() {
   }, []);
 
   const services = [
-    { title: 'Wedding', slug: 'wedding', link: '/wedding' },
-    { title: 'Normal', slug: 'normal', link: '/normal' },
-    { title: 'Events', slug: 'events', link: '/events' },
-    { title: 'LED Screens', slug: 'led', link: '/led' },
+    { title: 'Wedding', slug: 'wedding', link: '/wedding', tagline: 'Timeless Elegance' },
+    { title: 'Normal', slug: 'normal', link: '/normal', tagline: 'Everyday Beauty' },
+    { title: 'Events', slug: 'events', link: '/events', tagline: 'Grand Moments' },
+    { title: 'LED Screens', slug: 'led', link: '/led', tagline: 'Vivid Displays' },
   ];
 
   return (
-    <div className="flex flex-col bg-white">
-      {/* Hero / Services Section */}
-      <section className="relative w-full max-w-[1600px] mx-auto pt-16 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden" aria-labelledby="services-heading">
-        {/* Decorative background text */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full flex justify-center pointer-events-none z-0">
-          <span className="text-[16vw] font-black text-gray-100 leading-none tracking-tighter select-none lowercase" aria-hidden>
-            services
-          </span>
-        </div>
+    <div className="flex flex-col bg-[var(--color-bg)]">
+      {/* Hero Section */}
+      <section className="relative w-full py-28 px-4 sm:px-6 lg:px-8 overflow-hidden" aria-labelledby="hero-heading">
+        <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-bg-warm)] via-[var(--color-bg)] to-[#1a0a05] pointer-events-none" />
+        <div className="absolute top-0 left-0 w-full h-full opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, var(--color-primary) 0%, transparent 50%)' }} />
 
+        <div className="relative z-10 max-w-[1600px] mx-auto text-center">
+          <p className="text-sm font-semibold uppercase tracking-[0.35em] text-[var(--color-primary)] mb-6">
+            Premium Photography & Videography
+          </p>
+          <h1 id="hero-heading" className="font-[var(--font-display)] text-5xl sm:text-6xl md:text-7xl font-light text-[var(--color-secondary)] tracking-wide mb-6 leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
+            Crafting <em className="text-[var(--color-primary)] font-light">Timeless</em> Memories
+          </h1>
+          <p className="text-lg text-[var(--color-muted)] max-w-2xl mx-auto font-light leading-relaxed mb-10">
+            From intimate weddings to large-scale events, we capture every moment with care and artistry. Experience premier photography that tells your story.
+          </p>
+          <Link
+            to="/contact"
+            className="inline-flex items-center gap-2 border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-[var(--color-bg)] px-8 py-3.5 text-sm font-semibold uppercase tracking-[0.2em] transition-all duration-300 rounded-sm"
+          >
+            Book Now <span className="text-lg">&rarr;</span>
+          </Link>
+        </div>
+      </section>
+
+      {/* Decorative Divider */}
+      <div className="flex items-center justify-center py-4">
+        <div className="h-px w-16 bg-gradient-to-r from-transparent to-[var(--color-primary)]/40" />
+        <div className="w-2 h-2 rotate-45 border border-[var(--color-primary)]/40 mx-4" />
+        <div className="h-px w-16 bg-gradient-to-l from-transparent to-[var(--color-primary)]/40" />
+      </div>
+
+      {/* Services Section */}
+      <section className="relative w-full max-w-[1600px] mx-auto pt-12 pb-28 px-4 sm:px-6 lg:px-8 overflow-hidden" aria-labelledby="services-heading">
         <div className="relative z-10">
-          {/* Section header: title + paragraph */}
           <header className="text-center max-w-2xl mx-auto mb-16">
-            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[var(--color-primary)] mb-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[var(--color-primary)] mb-4">
               What we offer
             </p>
             <h2 id="services-heading" className="font-serif text-4xl sm:text-5xl font-bold text-[var(--color-secondary)] tracking-tight mb-6">
               Our Services
             </h2>
-            <p className="text-lg text-gray-600 font-light leading-relaxed">
-              From intimate weddings to large-scale events, we capture every moment with care. Explore our photography and LED screen services below—each crafted to bring your vision to life.
+            <div className="w-12 h-0.5 bg-[var(--color-primary)] mx-auto mb-6" />
+            <p className="text-base text-[var(--color-muted)] font-light leading-relaxed">
+              Each service is crafted to bring your vision to life with uncompromising quality and an eye for the extraordinary.
             </p>
           </header>
 
-          {/* Grid of 4 service cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {services.map((service, index) => (
               <Link
                 key={index}
                 to={service.link}
-                className="group block aspect-square relative overflow-hidden bg-gray-100 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2"
+                className="group block aspect-[3/4] relative overflow-hidden bg-[var(--color-surface)] rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]"
               >
                 {featuredByCategory[service.slug] ? (
                   <HomeImage
@@ -115,13 +137,17 @@ export default function Home() {
                     alt={service.title}
                   />
                 )}
-                <div className="absolute inset-0 bg-black/25 group-hover:bg-black/40 transition-colors duration-300 motion-safe:duration-150" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:from-black/90 transition-all duration-500" />
+                <div className="absolute inset-0 border border-[var(--color-primary)]/0 group-hover:border-[var(--color-primary)]/30 transition-all duration-500 m-3 rounded-sm" />
                 <div className="absolute inset-0 flex flex-col justify-end p-6">
-                  <h3 className="text-white font-serif text-2xl sm:text-3xl font-bold tracking-wide drop-shadow-md">
+                  <span className="text-[var(--color-primary)]/70 text-xs font-semibold uppercase tracking-[0.25em] mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    {service.tagline}
+                  </span>
+                  <h3 className="text-white font-serif text-2xl sm:text-3xl font-bold tracking-wide">
                     {service.title}
                   </h3>
-                  <span className="text-white/90 text-sm font-medium mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 motion-safe:duration-150">
-                    View gallery →
+                  <span className="text-[var(--color-primary)] text-sm font-medium mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    View Gallery &rarr;
                   </span>
                 </div>
               </Link>
@@ -131,22 +157,26 @@ export default function Home() {
       </section>
 
       {/* About Us Section */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-28 bg-[var(--color-surface)] relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 80% 30%, var(--color-primary) 0%, transparent 50%)' }} />
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="relative aspect-[4/3] overflow-hidden bg-gray-200 rounded-lg grayscale hover:grayscale-0 transition-all duration-700 motion-safe:duration-300">
+            <div className="relative aspect-[4/3] overflow-hidden bg-[var(--color-surface-light)] rounded-sm">
               <HomeImage
                 src="/images/home/about.jpg"
                 fallback={ABOUT_FALLBACK}
                 alt="Photographer"
               />
+              <div className="absolute inset-0 border border-[var(--color-primary)]/20 m-4 rounded-sm pointer-events-none" />
             </div>
             
             <div>
-              <h2 className="font-serif text-4xl md:text-5xl font-bold text-secondary mb-8 tracking-wide">
-                About RR Clicks
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[var(--color-primary)] mb-4">Our Story</p>
+              <h2 className="font-serif text-4xl md:text-5xl font-bold text-[var(--color-secondary)] mb-4 tracking-wide">
+                About <em className="font-light text-[var(--color-primary)]">RR Clicks</em>
               </h2>
-              <div className="space-y-6 text-gray-600 text-lg font-light leading-relaxed">
+              <div className="w-12 h-0.5 bg-[var(--color-primary)] mb-8" />
+              <div className="space-y-5 text-[var(--color-muted)] text-base font-light leading-relaxed">
                 <p>
                   Founded with a passion for visual storytelling, RR Clicks has grown into a premier photography and videography studio. We believe that every moment is unique and deserves to be captured with authenticity and artistic flair.
                 </p>
@@ -158,14 +188,14 @@ export default function Home() {
                 </p>
               </div>
               
-              <div className="mt-12 grid grid-cols-2 gap-8 border-t border-gray-200 pt-8">
+              <div className="mt-12 grid grid-cols-2 gap-8 border-t border-[var(--color-border)] pt-8">
                 <div>
-                  <div className="font-sans text-4xl font-black text-secondary mb-2">500+</div>
-                  <div className="text-sm text-gray-500 uppercase tracking-widest font-bold">Events Covered</div>
+                  <div className="font-serif text-4xl font-bold text-[var(--color-primary)] mb-2">500+</div>
+                  <div className="text-xs text-[var(--color-muted)] uppercase tracking-[0.2em] font-semibold">Events Covered</div>
                 </div>
                 <div>
-                  <div className="font-sans text-4xl font-black text-secondary mb-2">10+</div>
-                  <div className="text-sm text-gray-500 uppercase tracking-widest font-bold">Years Experience</div>
+                  <div className="font-serif text-4xl font-bold text-[var(--color-primary)] mb-2">10+</div>
+                  <div className="text-xs text-[var(--color-muted)] uppercase tracking-[0.2em] font-semibold">Years Experience</div>
                 </div>
               </div>
             </div>
