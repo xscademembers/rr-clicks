@@ -59,8 +59,11 @@ export default function Contact() {
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-[var(--color-secondary)] mb-1 text-sm">Our Studio</h4>
-                  <p className="text-[var(--color-muted)] text-sm">123 Photography Lane<br />Creative District, NY 10001</p>
+                  <h4 className="font-semibold text-[var(--color-secondary)] mb-1 text-sm">Studio Address</h4>
+                  <p className="text-[var(--color-muted)] text-sm">
+                    43-18-34, Venkatarajunagar, TSN Colony, Dondaparty, 530016.<br />
+                    Visakhapatnam, Andhra Pradesh
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -78,7 +81,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-[var(--color-secondary)] mb-1 text-sm">Email</h4>
-                  <p className="text-[var(--color-muted)] text-sm">info@rrclicks.com<br />bookings@rrclicks.com</p>
+                  <p className="text-[var(--color-muted)] text-sm">rrclicks14@gmail.com</p>
                 </div>
               </div>
             </div>

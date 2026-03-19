@@ -41,7 +41,8 @@ export default function Footer() {
               </a>
             </div>
             <p className="mt-6 text-sm text-[var(--color-muted)] font-medium leading-relaxed">
-              Email: info@rrclicks.com<br />
+              Contact: Bala Krishna<br />
+              Email: rrclicks14@gmail.com<br />
               Phone: +1 (555) 123-4567
             </p>
           </div>
