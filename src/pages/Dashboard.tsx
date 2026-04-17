@@ -61,6 +61,7 @@ export default function Dashboard() {
     { id: 'wedding', name: 'Wedding' },
     { id: 'normal', name: 'Normal Photography' },
     { id: 'led', name: 'LED Screens' },
+    { id: 'led-walls', name: 'LED Walls' },
   ];
 
   useEffect(() => {

@@ -17,10 +17,11 @@ function HomeImage({ src, fallback, alt }: { src: string; fallback: string; alt:
 const FALLBACK_IMAGES: Record<string, string> = {
   wedding: 'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800&auto=format&fit=crop',
   normal: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=800&auto=format&fit=crop',
-  events: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=800&auto=format&fit=crop',
+  events: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop',
   led: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=800&auto=format&fit=crop',
 };
 const ABOUT_FALLBACK = 'https://images.unsplash.com/photo-1554046920-90dcac824104?q=80&w=1000&auto=format&fit=crop';
+const HERO_BACKGROUND_IMAGE = '/DSC05370.jpg';
 
 const CATEGORIES = ['wedding', 'normal', 'events', 'led'];
 const isImageFile = (name: string) => /\.(jpg|jpeg|png|gif|webp)$/i.test(name);
@@ -72,7 +73,11 @@ export default function Home() {
     <div className="flex flex-col bg-[var(--color-bg)]">
       {/* Hero Section */}
       <section className="relative w-full py-28 px-4 sm:px-6 lg:px-8 overflow-hidden" aria-labelledby="hero-heading">
-        <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-bg-warm)] via-[var(--color-bg)] to-[#1a0a05] pointer-events-none" />
+        <div
+          className="absolute inset-0 bg-center bg-cover bg-no-repeat pointer-events-none"
+          style={{ backgroundImage: `url(${HERO_BACKGROUND_IMAGE})` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-[var(--color-bg)]/75 to-[#1a0a05]/85 pointer-events-none" />
         <div className="absolute top-0 left-0 w-full h-full opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, var(--color-primary) 0%, transparent 50%)' }} />
 
         <div className="relative z-10 max-w-[1600px] mx-auto text-center">
@@ -124,7 +129,7 @@ export default function Home() {
                 to={service.link}
                 className="group block aspect-[3/4] relative overflow-hidden bg-[var(--color-surface)] rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]"
               >
-                {featuredByCategory[service.slug] ? (
+                {service.slug !== 'events' && featuredByCategory[service.slug] ? (
                   <HomeImage
                     src={featuredByCategory[service.slug]}
                     fallback={FALLBACK_IMAGES[service.slug] ?? FALLBACK_IMAGES.wedding}

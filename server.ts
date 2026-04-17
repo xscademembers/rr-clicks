@@ -56,7 +56,9 @@ async function githubRequest(endpoint: string, method: string = 'GET', body?: an
   if (!response.ok) {
     const errorText = await response.text();
     console.error(`GitHub API Error (${response.status}):`, errorText);
-    throw new Error(`GitHub API Error: ${response.statusText}`);
+    const error = new Error(`GitHub API Error (${response.status}): ${response.statusText}`);
+    (error as Error & { status?: number }).status = response.status;
+    throw error;
   }
 
   return response.json();
@@ -112,7 +114,7 @@ app.get('/api/media/:category', async (req, res) => {
         res.json([]);
       }
     } catch (e: any) {
-      if (e.message.includes('404')) {
+      if (e?.status === 404 || e?.message?.includes('404') || e?.message?.includes('Not Found')) {
         res.json([]);
       } else {
         throw e;
