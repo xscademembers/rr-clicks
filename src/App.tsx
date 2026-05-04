@@ -4,12 +4,12 @@
  */
 
 import { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Events from './pages/Events';
 import Wedding from './pages/Wedding';
-import NormalPhotography from './pages/NormalPhotography';
+import Ads from './pages/Ads';
 import LedScreens from './pages/LedScreens';
 import LedWalls from './pages/LedWalls';
 import Contact from './pages/Contact';
@@ -34,7 +34,8 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="events" element={<Events />} />
           <Route path="wedding" element={<Wedding />} />
-          <Route path="normal" element={<NormalPhotography />} />
+          <Route path="ads" element={<Ads />} />
+          <Route path="normal" element={<Navigate to="/ads" replace />} />
           <Route path="led" element={<LedScreens />} />
           <Route path="led-walls" element={<LedWalls />} />
           <Route path="contact" element={<Contact />} />

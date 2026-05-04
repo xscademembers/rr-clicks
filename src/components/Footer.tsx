@@ -20,7 +20,7 @@ export default function Footer() {
             <h3 className="font-serif text-lg font-bold text-[var(--color-primary)] mb-5 tracking-wide">Quick Links</h3>
             <ul className="space-y-3 text-sm text-[var(--color-muted)] font-medium">
               <li><Link to="/wedding" className="hover:text-[var(--color-primary)] transition-colors duration-300">Wedding Photography</Link></li>
-              <li><Link to="/normal" className="hover:text-[var(--color-primary)] transition-colors duration-300">Normal Photography</Link></li>
+              <li><Link to="/ads" className="hover:text-[var(--color-primary)] transition-colors duration-300">Ads</Link></li>
               <li><Link to="/events" className="hover:text-[var(--color-primary)] transition-colors duration-300">Events</Link></li>
               <li><Link to="/led" className="hover:text-[var(--color-primary)] transition-colors duration-300">LED Screens</Link></li>
               <li><Link to="/contact" className="hover:text-[var(--color-primary)] transition-colors duration-300">Contact Us</Link></li>

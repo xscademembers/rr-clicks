@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Loader2 } from 'lucide-react';
 import { getApiUnavailableMessage } from '../utils/apiError';
+import { mediaListApiUrls } from '../utils/mediaApi';
 
 interface MediaItem {
   name: string;
@@ -23,24 +24,30 @@ export default function Gallery({ category, title, description }: GalleryProps) 
   useEffect(() => {
     const fetchMedia = async () => {
       try {
-        const response = await fetch(`/api/media/${category}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch media');
+        const tryUrls = mediaListApiUrls(category);
+
+        let filtered: MediaItem[] = [];
+        for (const url of tryUrls) {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error('Failed to fetch media');
+          }
+          const text = await response.text();
+          let data: MediaItem[];
+          try {
+            data = JSON.parse(text);
+          } catch {
+            setError(getApiUnavailableMessage());
+            setMedia([]);
+            setLoading(false);
+            return;
+          }
+          const list = Array.isArray(data) ? data : [];
+          filtered = list.filter((item: MediaItem) =>
+            /\.(jpg|jpeg|jfif|png|gif|webp|bmp|mp4|webm)$/i.test(item.name)
+          );
+          if (filtered.length > 0) break;
         }
-        const text = await response.text();
-        let data: MediaItem[];
-        try {
-          data = JSON.parse(text);
-        } catch {
-          setError(getApiUnavailableMessage());
-          setMedia([]);
-          setLoading(false);
-          return;
-        }
-        const list = Array.isArray(data) ? data : [];
-        const filtered = list.filter((item: MediaItem) =>
-          /\.(jpg|jpeg|png|gif|mp4|webm)$/i.test(item.name)
-        );
         setMedia(filtered);
       } catch (err: any) {
         setError(err.message);
@@ -88,7 +95,7 @@ export default function Gallery({ category, title, description }: GalleryProps) 
           {media.map((item) => {
             const isVideo = /\.(mp4|webm)$/i.test(item.name);
             return (
-              <div key={item.sha} className="group relative overflow-hidden bg-[var(--color-surface)] rounded-sm">
+              <div key={item.path || `${item.sha}-${item.name}`} className="group relative overflow-hidden bg-[var(--color-surface)] rounded-sm">
                 {isVideo ? (
                   <video 
                     src={item.url} 

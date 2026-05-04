@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Upload, Trash2, Image as ImageIcon, Video, FileText, Loader2, AlertCircle, Lock } from 'lucide-react';
 import { getApiUnavailableMessage } from '../utils/apiError';
+import { mediaListApiUrls } from '../utils/mediaApi';
 
 const DASHBOARD_STORAGE_KEY = 'rr_dashboard';
 const DASHBOARD_PASSWORD = 'admin123';
@@ -59,7 +60,7 @@ export default function Dashboard() {
   const categories = [
     { id: 'events', name: 'Events' },
     { id: 'wedding', name: 'Wedding' },
-    { id: 'normal', name: 'Normal Photography' },
+    { id: 'ads', name: 'Ads' },
     { id: 'led', name: 'LED Screens' },
     { id: 'led-walls', name: 'LED Walls' },
   ];
@@ -76,16 +77,21 @@ export default function Dashboard() {
     setLoading(true);
     setMediaHint(null);
     try {
-      const response = await fetch(`/api/media/${category}`);
-      if (!response.ok) throw new Error('Failed to fetch media');
-      const text = await response.text();
-      let data: MediaItem[];
-      try {
-        data = JSON.parse(text);
-      } catch {
-        throw new Error(getApiUnavailableMessage());
+      let list: MediaItem[] = [];
+      for (const url of mediaListApiUrls(category)) {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to fetch media');
+        const text = await response.text();
+        let data: MediaItem[];
+        try {
+          data = JSON.parse(text);
+        } catch {
+          throw new Error(getApiUnavailableMessage());
+        }
+        list = Array.isArray(data) ? data : [];
+        if (list.length > 0) break;
       }
-      setMedia(Array.isArray(data) ? data : []);
+      setMedia(list);
     } catch {
       setMedia([]);
       setMediaHint(getApiUnavailableMessage());

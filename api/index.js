@@ -41,6 +41,11 @@ async function githubRequest(endpoint, method = 'GET', body) {
   return res.json();
 }
 
+/** Public slug `ads` maps to legacy repo folder `normal`. */
+function mediaCategoryToRepoFolder(category) {
+  return category === 'ads' ? 'normal' : category;
+}
+
 const CONTACTS_PATH = 'data/contacts.json';
 
 app.get('/api/contacts', async (req, res) => {
@@ -115,8 +120,9 @@ app.get('/api/media/:category', async (req, res) => {
   try {
     if (!isGitHubConfigured()) return res.json([]);
     const { category } = req.params;
+    const folder = mediaCategoryToRepoFolder(category);
     try {
-      const files = await githubRequest(`/contents/${category}`);
+      const files = await githubRequest(`/contents/${folder}`);
       if (Array.isArray(files)) {
         res.json(files.map((f) => ({
           name: f.name,
@@ -147,11 +153,12 @@ app.post('/api/media/:category', upload.single('file'), async (req, res) => {
     const file = req.file;
     if (!file) return res.status(400).json({ error: 'No file uploaded' });
     const { category } = req.params;
+    const folder = mediaCategoryToRepoFolder(category);
     const fileName = `${Date.now()}-${file.originalname.replace(/[^a-zA-Z0-9.]/g, '_')}`;
-    const filePath = `${category}/${fileName}`;
+    const filePath = `${folder}/${fileName}`;
     const content = file.buffer.toString('base64');
     const result = await githubRequest(`/contents/${filePath}`, 'PUT', {
-      message: `Upload ${fileName} to ${category}`,
+      message: `Upload ${fileName} to ${folder}`,
       content,
     });
     res.status(201).json({

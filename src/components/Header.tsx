@@ -10,7 +10,7 @@ export default function Header() {
     { name: 'Home', path: '/' },
     { name: 'Events', path: '/events' },
     { name: 'Wedding', path: '/wedding' },
-    { name: 'Normal', path: '/normal' },
+    { name: 'Ads', path: '/ads' },
     { name: 'LED Screens', path: '/led' },
     { name: 'LED Walls', path: '/led-walls' },
     { name: 'Contact', path: '/contact' },

@@ -3,7 +3,7 @@
 Place these image files here so they are committed to GitHub and render on the live site:
 
 - **wedding.jpg** – Wedding service card (hero grid)
-- **normal.jpg** – Normal photography service card
+- **ads.jpg** – Ads service card (landing grid)
 - **events.jpg** – Events service card
 - **led.jpg** – LED Screens service card
 - **about.jpg** – About RR Clicks section (photographer image)

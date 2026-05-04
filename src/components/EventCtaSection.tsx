@@ -22,12 +22,12 @@ const CTA_COPY_BY_PATH: Record<string, CtaCopy> = {
       'Celebrate every ritual, smile, and emotion with elegant wedding coverage designed around your style. Reach out for personalized wedding packages.',
     action: 'Plan My Wedding Shoot',
   },
-  '/normal': {
-    eyebrow: 'Celebrate Everyday Moments',
-    title: 'Turn Simple Moments Into Art',
+  '/ads': {
+    eyebrow: 'Stand Out',
+    title: 'Ads That Get Noticed',
     description:
-      'From portraits to family milestones, we capture natural, heartfelt frames you will cherish for years. Let us plan your next session.',
-    action: 'Book a Session',
+      'From product launches to brand campaigns, we craft visuals that communicate clearly and leave a lasting impression. Tell us about your next shoot.',
+    action: 'Plan Your Shoot',
   },
   '/events': {
     eyebrow: 'Make Every Event Unforgettable',

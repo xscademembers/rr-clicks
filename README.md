@@ -22,7 +22,7 @@ View your app in AI Studio: https://ai.studio/apps/c70da2de-f8e1-4f41-aff7-45f7e
 
 Images in **`public/images/home/`** are committed to the repo and will render on the home page when you push to GitHub or deploy statically:
 
-- `wedding.jpg`, `normal.jpg`, `events.jpg`, `led.jpg` – service cards
+- `wedding.jpg`, `ads.jpg`, `events.jpg`, `led.jpg` – service cards
 - `about.jpg` – About section
 
 Add these files under `public/images/home/`. If a file is missing, the site falls back to placeholder images. Do **not** add `public/images` to `.gitignore` so that images are pushed and served from the repo.
