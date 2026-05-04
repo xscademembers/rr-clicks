@@ -30,7 +30,7 @@ export default function Footer() {
           <div>
             <h3 className="font-serif text-lg font-bold text-[var(--color-primary)] mb-5 tracking-wide">Connect With Us</h3>
             <div className="flex gap-4">
-              <a href="#" className="w-11 h-11 rounded-full border border-[var(--color-primary)]/30 flex items-center justify-center text-[var(--color-primary)]/70 hover:bg-[var(--color-primary)] hover:text-[var(--color-bg)] hover:border-[var(--color-primary)] transition-all duration-300">
+              <a href="https://www.instagram.com/rrclicksphotography14?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noreferrer" className="w-11 h-11 rounded-full border border-[var(--color-primary)]/30 flex items-center justify-center text-[var(--color-primary)]/70 hover:bg-[var(--color-primary)] hover:text-[var(--color-bg)] hover:border-[var(--color-primary)] transition-all duration-300">
                 <Instagram className="w-5 h-5" />
               </a>
               <a href="#" className="w-11 h-11 rounded-full border border-[var(--color-primary)]/30 flex items-center justify-center text-[var(--color-primary)]/70 hover:bg-[var(--color-primary)] hover:text-[var(--color-bg)] hover:border-[var(--color-primary)] transition-all duration-300">
@@ -43,7 +43,7 @@ export default function Footer() {
             <p className="mt-6 text-sm text-[var(--color-muted)] font-medium leading-relaxed">
               Contact: Bala Krishna<br />
               Email: rrclicks14@gmail.com<br />
-              Phone: +1 (555) 123-4567
+              Phone: +91 97044 80460
             </p>
           </div>
         </div>

@@ -35,7 +35,7 @@ export default function Header() {
               <a href="#" className="hover:text-[var(--color-primary)] transition-colors duration-300"><Facebook className="w-4 h-4" fill="currentColor" /></a>
               <a href="#" className="hover:text-[var(--color-primary)] transition-colors duration-300"><Twitter className="w-4 h-4" fill="currentColor" /></a>
               <a href="#" className="hover:text-[var(--color-primary)] transition-colors duration-300"><Youtube className="w-4 h-4" /></a>
-              <a href="#" className="hover:text-[var(--color-primary)] transition-colors duration-300"><Instagram className="w-4 h-4" /></a>
+              <a href="https://www.instagram.com/rrclicksphotography14?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noreferrer" className="hover:text-[var(--color-primary)] transition-colors duration-300"><Instagram className="w-4 h-4" /></a>
             </div>
             
             <nav className="flex gap-8">

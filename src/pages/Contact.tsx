@@ -72,7 +72,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-[var(--color-secondary)] mb-1 text-sm">Phone</h4>
-                  <p className="text-[var(--color-muted)] text-sm">+1 (555) 123-4567<br />Mon-Fri, 9am-6pm</p>
+                  <p className="text-[var(--color-muted)] text-sm">+91 97044 80460<br />Mon-Fri, 9am-6pm</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -132,7 +132,7 @@ export default function Contact() {
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className="w-full bg-[var(--color-surface-light)] border border-[var(--color-border)] rounded-sm px-4 py-3 text-[var(--color-secondary)] placeholder-[var(--color-muted)]/50 focus:outline-none focus:border-[var(--color-primary)] focus:ring-1 focus:ring-[var(--color-primary)] transition-colors"
-                  placeholder="+1 (555) 000-0000"
+                  placeholder="+91 98765 43210"
                 />
               </div>
               <div className="space-y-2">
